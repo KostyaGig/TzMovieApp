@@ -1,5 +1,7 @@
 # TzMovieApp
 
+## Description
+Получение фильмов с интернета,отображение их в списке,динамическая подгрузка элементов,с помощью пагинации
 
 ## Main Stack : Retrofit,Coroutines,LiveData,Mvvm <br/>
 Image loader: Picasso <br/>
@@ -43,3 +45,6 @@ src="https://firebasestorage.googleapis.com/v0/b/brushapp-d54ab.appspot.com/o/te
 
 <img src="https://firebasestorage.googleapis.com/v0/b/testprojectforexample.appspot.com/o/end.jpg?alt=media&token=0b689460-d8b2-42a0-bad8-9d18aa753ff4" width="300" height="550"/>
 
+## Rest API
+
+### GET - https://api.nytimes.com/svc/movies/v2/reviews/all.json
