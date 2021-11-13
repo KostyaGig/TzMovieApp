@@ -3,11 +3,10 @@ package com.zinoview.tzmovieapp.presentation.state
 import android.widget.ImageView
 import android.widget.TextView
 import com.zinoview.tzmovieapp.core.BaseImage
-import com.zinoview.tzmovieapp.presentation.core.log
+import com.zinoview.tzmovieapp.presentation.adapter.MoviesAdapter
 
 sealed class MovieUiState {
 
-    open fun show() = Unit
 
     open fun map(
         movieImageView: ImageView,
@@ -19,12 +18,9 @@ sealed class MovieUiState {
         movieErrorTextView: TextView
     ) = Unit
 
-    object Progress : MovieUiState() {
+    open suspend fun nextPactMovies(moviesStore: MoviesUiStateStore) = Unit
 
-        override fun show() {
-            log("Progress state...")
-        }
-    }
+    open fun handleState(adapter: MoviesAdapter) = Unit
 
     class Base(
         private val title: String,
@@ -43,6 +39,12 @@ sealed class MovieUiState {
             movieDescriptionTextView.text = description
         }
 
+        override suspend fun nextPactMovies(moviesStore: MoviesUiStateStore)
+            = moviesStore.nextPactItems(NEXT_MOVIES_COUNT)
+
+        private companion object {
+            private const val NEXT_MOVIES_COUNT = 5
+        }
     }
 
     class Failure(
@@ -52,5 +54,8 @@ sealed class MovieUiState {
         override fun map(movieErrorTextView: TextView) {
             movieErrorTextView.text = message
         }
+
+        override fun handleState(adapter: MoviesAdapter)
+            = adapter.update(listOf(this))
     }
 }

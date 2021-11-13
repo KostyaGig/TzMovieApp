@@ -41,7 +41,7 @@ class MoviesViewModelFactory(
             MoviesUiStateMapper.Base(
                 MovieUiStateMapper.Base()
             ),
-            MovieUiStateCommunication.Base()
+            MovieUiStateCommunication()
         ) as T
     }
 }

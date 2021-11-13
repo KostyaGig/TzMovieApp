@@ -27,8 +27,6 @@ interface MoviesViewModel : Observe<List<MovieUiState>> {
     ) : MoviesViewModel, ViewModel() {
 
         override fun movies() {
-            movieCommunication.postValue(listOf(MovieUiState.Progress))
-
             viewModelScope.launch(defaultDispatcher) {
                 val domainMovies = interactor.movies()
                 val uiMovies = domainMovies.map(moviesUiMapper)

@@ -7,5 +7,4 @@ interface MovieService {
 
     @GET("all.json")
     suspend fun movies(@Query("api-key") apiKey: String) : CloudMovies.Base
-
 }

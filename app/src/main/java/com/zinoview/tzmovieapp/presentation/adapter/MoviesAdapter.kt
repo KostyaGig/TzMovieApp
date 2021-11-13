@@ -13,7 +13,7 @@ interface MoviesAdapter {
 
     fun update(items: List<MovieUiState>)
 
-    class Base : MoviesAdapter, RecyclerView.Adapter<Base.MoviesViewHolder>() {
+    class Base() : MoviesAdapter, RecyclerView.Adapter<Base.MoviesViewHolder>() {
 
         private val movies = ArrayList<MovieUiState>()
 
@@ -23,14 +23,12 @@ interface MoviesAdapter {
         }
 
         private companion object {
-            private const val PROGRESS = 1
-            private const val BASE = 2
-            private const val FAILURE = 3
+            private const val BASE = 1
+            private const val FAILURE = 2
         }
 
         override fun getItemViewType(position: Int): Int {
             return when (movies[position]) {
-                is MovieUiState.Progress -> PROGRESS
                 is MovieUiState.Base -> BASE
                 else -> FAILURE
             }
@@ -38,7 +36,6 @@ interface MoviesAdapter {
 
         override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): MoviesViewHolder {
             return when (viewType) {
-                PROGRESS -> MoviesViewHolder.Progress(R.layout.progress_item.makeView(parent))
                 BASE -> MoviesViewHolder.Base(R.layout.movie_item.makeView(parent))
                 else -> MoviesViewHolder.Failure(R.layout.failure_item.makeView(parent))
             }
@@ -57,8 +54,6 @@ interface MoviesAdapter {
         ) : RecyclerView.ViewHolder(view) {
 
             open fun bind(item: MovieUiState) {}
-
-            class Progress(view: View) : MoviesViewHolder(view)
 
             class Base(view: View) : MoviesViewHolder(view) {
                 private val movieImageView = view.findViewById<ImageView>(R.id.movie_image)
@@ -83,3 +78,4 @@ interface MoviesAdapter {
             = LayoutInflater.from(parent.context).inflate(this,parent,false)
     }
 }
+
